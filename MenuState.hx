@@ -13,13 +13,21 @@ class MenuState extends FlxState {
         // Background
         FlxG.cameras.bgColor = FlxColor.WHITE;
 
-
+        
         // Play Button
         var btnPlay:FlxButton;
         btnPlay = new FlxButton(0, 0, "Play", clickPlay);
         add(btnPlay);
         btnPlay.screenCenter();
-
+    
+        /* Alternate: Press any button to play
+        var playText:FlxText = new FlxText(0, 120, FlxG.width, "Press Any Button To Play");
+        playText.setFormat(null, 24, FlxColor.WHITE);
+		playText.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
+        playText.alignment = "center";
+        playText.size = 32;
+        add(playText);
+        */
 
         // Title Text
         var titleFormat = new FlxTextFormat(0xE6E600, true, false, 0xFF8000);
