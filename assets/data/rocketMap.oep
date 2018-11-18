@@ -16,12 +16,12 @@
     <Width>640</Width>
     <Height>2400</Height>
   </LevelMaximumSize>
-  <Filename>D:\Programming\SacHacks-2018\sachacks-2018\assets\data\rocketMap.oep</Filename>
+  <Filename>C:\Users\lordk\Desktop\TileMap\rocketMap.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>false</CameraEnabled>
   <CameraSize>
     <Width>640</Width>
-    <Height>360</Height>
+    <Height>480</Height>
   </CameraSize>
   <ExportCameraPosition>false</ExportCameraPosition>
   <LevelValueDefinitions />
@@ -54,7 +54,7 @@
   <Tilesets>
     <Tileset>
       <Name>platforms</Name>
-      <FilePath>..\images\generic_platformer_tiles.png</FilePath>
+      <FilePath>generic_platformer_tiles.png</FilePath>
       <TileSize>
         <Width>32</Width>
         <Height>32</Height>
