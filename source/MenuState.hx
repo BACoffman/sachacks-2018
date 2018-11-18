@@ -10,6 +10,9 @@ import flash.system.System;
 
 class MenuState extends FlxState {
 	override public function create():Void {
+		// Music
+		FlxG.sound.playMusic(AssetPaths.plasma__ogg, 0.5, true);
+
 		// Background
 		FlxG.cameras.bgColor = FlxColor.WHITE;
 
