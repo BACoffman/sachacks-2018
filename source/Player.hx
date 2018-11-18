@@ -3,6 +3,7 @@ package;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.system.FlxAssets;
 
 class Player extends FlxSprite {
 	private var player1:Bool;
@@ -95,6 +96,7 @@ class Player extends FlxSprite {
 			}
 
 			animation.play("shoot");
+			FlxG.sound.play(AssetPaths.explode3__wav);
 		}
 	}
 }
