@@ -6,6 +6,8 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
+import flixel.addons.editors.ogmo.FlxOgmoLoader;
+import flixel.tile.FlxTilemap;
 
 class PlayState extends FlxState {
 	public static var rockets:FlxTypedGroup<Rocket>;
@@ -13,20 +15,25 @@ class PlayState extends FlxState {
 	public var player1:Player;
 	public var player2:Player;
 	public var floor:FlxSprite;
+	public var map:FlxOgmoLoader;
+	public var mapCollisions:FlxTilemap;
+	public var mapBG:FlxTilemap;
 
 	override public function create():Void {
 		// Remove cursor
 		FlxG.mouse.visible = false;
 
 		// Level
-		floor = new FlxSprite(0, 300);
-		floor.makeGraphic(640, 60, FlxColor.PINK);
-		floor.immovable = true;
-		add(floor);
+		map = new FlxOgmoLoader(AssetPaths.rocketMap__oel);
+		mapBG = map.loadTilemap(AssetPaths.generic_platformer_tiles__png, 32, 32, "backdrop");
+		mapCollisions = map.loadTilemap(AssetPaths.generic_platformer_tiles__png, 32, 32, "collisions");
+		mapCollisions.follow();
+		add(mapBG);
+		add(mapCollisions);
 
 		// Players
-		player1 = new Player(100, 0, true);
-		player2 = new Player(500, 0, false);
+		player1 = new Player(100, 2322, true);
+		player2 = new Player(500, 2322, false);
 		add(player1);
 		add(player2);
 
@@ -48,7 +55,7 @@ class PlayState extends FlxState {
 	override public function update(elapsed:Float):Void {
 		super.update(elapsed);
 
-		// FlxG.camera.follow(player1);
+		FlxG.camera.follow(player1);
 
 		// Screen Wrapping
 		FlxSpriteUtil.screenWrap(player1, true, true, false, false);
@@ -56,8 +63,8 @@ class PlayState extends FlxState {
 
 		// Collisions
 		FlxG.collide(player1, player2);
-		FlxG.collide(floor, player1);
-		FlxG.collide(floor, player2);
+		FlxG.collide(mapCollisions, player1);
+		FlxG.collide(mapCollisions, player2);
 
 		// Hit player
 		FlxG.overlap(player1, rockets, endGame);

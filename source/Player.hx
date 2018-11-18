@@ -33,7 +33,7 @@ class Player extends FlxSprite {
 
 		// max velocity and drag
 		drag.set(1600, 1600);
-		maxVelocity.set(250, 700);
+		maxVelocity.set(250, 900);
 		acceleration.y = 620;
 	}
 
