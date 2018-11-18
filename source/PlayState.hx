@@ -8,6 +8,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.tile.FlxTilemap;
+import flixel.FlxObject;
+
 
 class PlayState extends FlxState {
 	public static var rockets:FlxTypedGroup<Rocket>;
@@ -18,6 +20,7 @@ class PlayState extends FlxState {
 	public var map:FlxOgmoLoader;
 	public var mapCollisions:FlxTilemap;
 	public var mapBG:FlxTilemap;
+	public var cameraTarget:FlxObject;
 
 	override public function create():Void {
 		// Remove cursor
@@ -27,6 +30,8 @@ class PlayState extends FlxState {
 		map = new FlxOgmoLoader(AssetPaths.rocketMap__oel);
 		mapBG = map.loadTilemap(AssetPaths.generic_platformer_tiles__png, 32, 32, "backdrop");
 		mapCollisions = map.loadTilemap(AssetPaths.generic_platformer_tiles__png, 32, 32, "collisions");
+		mapCollisions.allowCollisions = FlxObject.ANY;
+
 		mapCollisions.follow();
 		add(mapBG);
 		add(mapCollisions);
@@ -49,13 +54,21 @@ class PlayState extends FlxState {
 
 		add(rockets);
 
+		//Camera
+		cameraTarget = new FlxObject(0, 0, 0, 0);
+		cameraTarget.y = player1.y;
+		FlxG.camera.setScrollBoundsRect(0, 0, map.width, map.height);
+		FlxG.worldBounds.set(0, 0, map.width, map.height);
+
 		super.create();
 	}
 
 	override public function update(elapsed:Float):Void {
 		super.update(elapsed);
 
-		FlxG.camera.follow(player1);
+		//Camera
+		FlxG.camera.follow(cameraTarget);
+		cameraTarget.y -= 1;
 
 		// Screen Wrapping
 		FlxSpriteUtil.screenWrap(player1, true, true, false, false);
