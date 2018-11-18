@@ -20,7 +20,7 @@ class Rocket extends FlxSprite {
 			kill();
 		}
 
-		y += 6;
+		y += 7;
 		super.update(elapsed);
 	}
 }
