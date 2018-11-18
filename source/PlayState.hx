@@ -56,12 +56,23 @@ class PlayState extends FlxState {
 
 		// Collisions
 		FlxG.collide(player1, player2);
-		FlxG.collide(player1, floor);
-		FlxG.collide(player2, floor);
+		FlxG.collide(floor, player1);
+		FlxG.collide(floor, player2);
 
+		// Hit player
 		FlxG.overlap(player1, rockets, endGame);
 		FlxG.overlap(player2, rockets, endGame);
+
+		// Hit environment
+		FlxG.overlap(floor, rockets, killRocket);
 	}
 
-	private function endGame(player:Player, rocket:Rocket) {}
+	private function endGame(player:Player, rocket:Rocket) {
+		player.health--;
+		rocket.kill();
+	}
+
+	private function killRocket(floor:FlxSprite, rocket:Rocket) {
+		rocket.kill();
+	}
 }

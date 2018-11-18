@@ -12,6 +12,8 @@ class Player extends FlxSprite {
 
 		player1 = isPlayer1;
 
+		health = 3;
+
 		if (player1) {
 			loadGraphic(AssetPaths.playerOne__png, true, 50, 50);
 		} else {
@@ -38,6 +40,11 @@ class Player extends FlxSprite {
 	override public function update(elapsed:Float):Void {
 		movement(player1);
 		shoot(player1);
+
+		if (health <= 0) {
+			// Game over
+			kill();
+		}
 
 		super.update(elapsed);
 	}
