@@ -8,14 +8,13 @@ import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState {
-
 	public static var rockets:FlxTypedGroup<Rocket>;
+
 	public var player1:Player;
 	public var player2:Player;
 	public var floor:FlxSprite;
 
 	override public function create():Void {
-		
 		// Remove cursor
 		FlxG.mouse.visible = false;
 
@@ -24,7 +23,6 @@ class PlayState extends FlxState {
 		floor.makeGraphic(640, 60, FlxColor.PINK);
 		floor.immovable = true;
 		add(floor);
-		
 
 		// Players
 		player1 = new Player(100, 0, true);
@@ -50,7 +48,7 @@ class PlayState extends FlxState {
 	override public function update(elapsed:Float):Void {
 		super.update(elapsed);
 
-		//FlxG.camera.follow(player1);
+		// FlxG.camera.follow(player1);
 
 		// Screen Wrapping
 		FlxSpriteUtil.screenWrap(player1, true, true, false, false);
@@ -63,10 +61,7 @@ class PlayState extends FlxState {
 
 		FlxG.overlap(player1, rockets, endGame);
 		FlxG.overlap(player2, rockets, endGame);
-
 	}
 
-	private function endGame(player:Player, rocket:Rocket){
-
-	}
+	private function endGame(player:Player, rocket:Rocket) {}
 }
