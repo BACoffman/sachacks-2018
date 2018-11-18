@@ -44,11 +44,11 @@ class Player extends FlxSprite {
 	}
 
 	override public function update(elapsed:Float):Void {
-		joy1 = FlxG.gamepads.getByID(0);
+		joy1 = FlxG.gamepads.getByID(2);
 		joy2 = FlxG.gamepads.getByID(1);
 
-		FlxG.watch.addQuick("joy1 justPressed ID", joy1.firstJustPressedID());
-		FlxG.watch.addQuick("joy2 justPressed ID", joy2.firstJustPressedID());
+		FlxG.watch.addQuick("joy1 justPressed ID", joy1.firstPressedID());
+		FlxG.watch.addQuick("joy2 justPressed ID", joy2.firstPressedID());
 
 		movement(player1);
 		shoot(player1);
@@ -77,7 +77,10 @@ class Player extends FlxSprite {
 			if (joy1 != null) {
 				leftJoy = joy1.pressed.DPAD_LEFT;
 				rightJoy = joy1.pressed.DPAD_RIGHT;
-			}
+			} else {
+                leftJoy = false;
+                rightJoy = false;
+            }
 		} else {
 			left = FlxG.keys.anyPressed([J]);
 			right = FlxG.keys.anyPressed([L]);
@@ -86,7 +89,10 @@ class Player extends FlxSprite {
 			if (joy2 != null) {
 				leftJoy = joy2.pressed.DPAD_LEFT;
 				rightJoy = joy2.pressed.DPAD_RIGHT;
-			}
+			} else {
+                leftJoy = false;
+                rightJoy = false;
+            }
 		}
 
 		if (left || leftJoy) {
@@ -113,10 +119,13 @@ class Player extends FlxSprite {
 		if (isPlayer1) {
 			shoot = FlxG.keys.anyJustPressed([S]);
 			if (joy1 != null) {
-				// shootJoy = joy1.anyJustPressed()
+				// don't know what shoot button is
 			}
 		} else {
 			shoot = FlxG.keys.anyJustPressed([K]);
+            if(joy2 != null){
+                
+            }
 		}
 		if (shoot) {
 			var rocket:Rocket = rocketGroup.recycle();
