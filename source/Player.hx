@@ -3,15 +3,17 @@ package;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.system.FlxAssets;
+import flixel.group.FlxGroup;
 
 class Player extends FlxSprite {
 	private var player1:Bool;
+	private var rocketGroup:FlxTypedGroup<Rocket>;
 
-	override public function new(X:Int, Y:Int, isPlayer1:Bool):Void {
+	override public function new(X:Int, Y:Int, isPlayer1:Bool, rockets:FlxTypedGroup<Rocket>):Void {
 		super(X, Y);
 
 		player1 = isPlayer1;
+		rocketGroup = rockets;
 
 		health = 3;
 
@@ -88,8 +90,9 @@ class Player extends FlxSprite {
 			shoot = FlxG.keys.anyJustPressed([K]);
 		}
 		if (shoot) {
-			var rocket:Rocket = PlayState.rockets.recycle();
+			var rocket:Rocket = rocketGroup.recycle();
 			rocket.reset(x + (width - rocket.width) / 2, y + (height));
+			rocket.solid = true;
 
 			if (velocity.y == 0) {
 				velocity.y = -0.6 * maxVelocity.y;

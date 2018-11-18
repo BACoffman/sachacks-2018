@@ -4,14 +4,13 @@ import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.tile.FlxTilemap;
+import flixel.FlxObject;
 
 class PlayState extends FlxState {
-	public static var rockets:FlxTypedGroup<Rocket>;
-
+	public var rockets:FlxTypedGroup<Rocket>;
 	public var player1:Player;
 	public var player2:Player;
 	public var floor:FlxSprite;
@@ -28,28 +27,29 @@ class PlayState extends FlxState {
 		mapBG = map.loadTilemap(AssetPaths.generic_platformer_tiles__png, 32, 32, "backdrop");
 		mapCollisions = map.loadTilemap(AssetPaths.generic_platformer_tiles__png, 32, 32, "collisions");
 		mapCollisions.follow();
+		mapCollisions.allowCollisions = FlxObject.ANY;
 		add(mapBG);
 		add(mapCollisions);
 
+		rockets = new FlxTypedGroup<Rocket>(16);
+
 		// Players
-		player1 = new Player(100, 2322, true);
-		player2 = new Player(500, 2322, false);
+		player1 = new Player(100, 2322, true, rockets);
+		player2 = new Player(500, 2322, false, rockets);
 		add(player1);
 		add(player2);
 
-		rockets = new FlxTypedGroup<Rocket>(16);
+		super.create();
 
 		var rocket:Rocket;
 		for (i in 0...16) {
-			rocket = new Rocket(-100, -100);
+			rocket = new Rocket(-100, -100, mapCollisions);
 			rocket.exists = false;
 
 			rockets.add(rocket);
 		}
 
 		add(rockets);
-
-		super.create();
 	}
 
 	override public function update(elapsed:Float):Void {
@@ -71,7 +71,7 @@ class PlayState extends FlxState {
 		FlxG.overlap(player2, rockets, endGame);
 
 		// Hit environment
-		FlxG.overlap(floor, rockets, killRocket);
+		FlxG.collide(mapCollisions, rockets, killRocket);
 	}
 
 	private function endGame(player:Player, rocket:Rocket) {
@@ -79,7 +79,7 @@ class PlayState extends FlxState {
 		rocket.kill();
 	}
 
-	private function killRocket(floor:FlxSprite, rocket:Rocket) {
+	private function killRocket(map:FlxTilemap, rocket:Rocket) {
 		rocket.kill();
 	}
 }
